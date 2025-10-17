@@ -7,6 +7,7 @@ A small research assistant using LangChain tools and OpenAI that can search the 
 - Web search via DuckDuckGo and Wikipedia lookup
 - Structured output validated by `pydantic`
 - Saves results to `research_output.txt`
+ - Fetches and summarizes full web pages for better citations
 
 ## Requirements
 See `requirements.txt`. You'll also need API keys for OpenAI (and optionally Anthropic) available via environment variables.
@@ -36,6 +37,30 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+### CLI usage
+```bash
+# Non-interactive run
+python main.py --non-interactive --topic "Large Language Models in Finance"
+
+# Choose model and verbose agent logs
+python main.py --non-interactive --topic "Solar activity 2025" --model gpt-4o-mini --verbose
+```
+
+## Web UI (Streamlit)
+```bash
+# Install deps (once)
+pip install -r requirements.txt
+
+# Launch the chat UI
+streamlit run app.py
+```
+The chat renders responses as Markdown and optionally saves structured reports to your output file.
+
+### Configuration via environment
+- **SAVE_PATH**: where to save research output file (default `research_output.txt`)
+- **WIKI_MAX_CHARS**: number of characters to fetch from Wikipedia summaries (default `100`)
+- **FETCH_MAX_CHARS**: max characters from fetched web pages (default `100`)
 
 The app will prompt for a topic and then create/append the structured result to `research_output.txt`.
 
